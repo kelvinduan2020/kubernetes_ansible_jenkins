@@ -1,0 +1,5 @@
+node{
+    stage("checkout"){
+        git 'https://github.com/kelvinduan2020/kubernetes_ansible_jenkins.git'
+    } 
+}
