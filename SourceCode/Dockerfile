@@ -1,5 +1,5 @@
 FROM centos:7
-RUN yum update -y && yum install -y httpd && yum install -y unzip && yum clean all
+RUN yum update -y && yum install -y httpd zip unzip && yum clean all
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
 WORKDIR /var/www/html/
 RUN unzip photogenic.zip

@@ -17,5 +17,13 @@ node{
         sshagent(['ansible']) {
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.224.234.158 docker tag $JOB_NAME:v1.$BUILD_ID kelvinduan/$JOB_NAME:latest'            
         }
+    }  
+    stage("push to docker hub"){
+        sshagent(['ansible']) {
+            withCredentials([string(credentialsId: 'dockerhub', variable: 'docker_hub_pw')]) {
+                sh "docker login -u kelvinduan -p ${docker_hub_pw}"
+                sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.224.234.158 docker push kelvinduan/$JOB_NAME:latest'    
+            }        
+        }
     } 
 }
