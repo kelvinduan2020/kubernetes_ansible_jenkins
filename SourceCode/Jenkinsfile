@@ -8,4 +8,14 @@ node{
             sh 'scp /var/lib/jenkins/workspace/kubernete_ansible/SourceCode/* ubuntu@54.224.234.158:/home/ubuntu'
         }
     }
+    stage("docker build image"){
+        sshagent(['ansible']) {
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.224.234.158 docker build -t $JOB_NAME:v1.$BUILD_ID .'            
+        }
+    } 
+    stage("docker tag image"){
+        sshagent(['ansible']) {
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.224.234.158 docker tag $JOB_NAME:v1.$BUILD_ID kelvinduan/$JOB_NAME:latest'            
+        }
+    } 
 }
