@@ -1,0 +1,34 @@
+Vagrant.configure("2") do |config|
+  servers=[
+    {
+      :hostname => "jenkins",
+      :box => "bento/ubuntu-22.04", 
+      :ip => "192.168.0.2",
+      :path => "jenkins.sh",
+	    :memeory => 2048,
+	    :cpu => 1
+    },    
+    {
+      :hostname => "ansible",
+      :box => "bento/ubuntu-22.04", 
+      :ip => "192.168.0.3",
+      :path => "ansible.sh",
+	    :memeory => 2048,
+	    :cpu => 1
+    }
+  ]
+
+  servers.each do |machine|
+    config.vm.define machine[:hostname] do |node|
+      node.vm.box = machine[:box]
+      node.vm.hostname = machine[:hostname]    
+	    node.vm.provision :shell, path: machine[:path]
+      node.vm.network :private_network, ip: machine[:ip]
+      node.vm.provider :virtualbox do |v|
+        v.name = machine[:hostname]
+        v.memory = machine[:memeory]
+        v.cpus = machine[:cpu]
+      end
+    end
+  end
+end
