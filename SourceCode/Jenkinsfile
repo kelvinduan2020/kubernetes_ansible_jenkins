@@ -2,4 +2,10 @@ node{
     stage("checkout"){
         git 'https://github.com/kelvinduan2020/kubernetes_ansible_jenkins.git'
     } 
+    stage("copy dockfile to ansible"){
+        sshagent(['ansible']) {
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.224.234.158'
+            sh 'scp /var/lib/jenkins/workspace/kubernete_ansible/SourceCode/* ubuntu@54.224.234.158:/home/ubuntu'
+        }
+    }
 }
