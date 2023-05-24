@@ -1,5 +1,7 @@
 # Custom files
 **/.vagrant
+**/.terraform
+**/.terraform.lock.hcl
 
 # Logs
 logs
